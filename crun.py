@@ -79,13 +79,10 @@ def run(exec_name: str, *cmd_args) -> bool:
 	"""Run the executable."""
 	if not is_executable(exec_name):
 		logging.error(f"{exec_name} is not executable.")
-		return
+		return False
 	
-	if "/" in exec_name:
-		cmd = [exec_name]
-	
-	else:
-		cmd = [f"./{exec_name}"] + list(cmd_args)
+	cmd = [f"./{exec_name}" if '/' not in exec_name else exec_name]
+	cmd += list(cmd_args)
 
 	return run_cmd(cmd)
 
